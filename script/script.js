@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded',  () => {
         cartBtn = document.getElementById('cart'),
         wishListBtn = document.getElementById('wishlist'),
         goodsWrapper = document.querySelector('.goods-wrapper'),
-        cart = document.querySelector('.cart');
+        cart = document.querySelector('.cart'),
+        category = document.querySelector('.category');
 
 
         
@@ -60,14 +61,21 @@ document.addEventListener('DOMContentLoaded',  () => {
   };
   
   //Рандомная ортировка
-  const randomSort = item => {
-    return item.sort(() => Math.random() - 0.5);
-  }
+  const randomSort = item => item.sort(() => Math.random() - 0.5);
 
-
+  const chooseCategory = event => {
+    const target  = event.target;
+    event.preventDefault();
+    if (target.classList.contains('category-item')) {
+      const category = target.dataset.category;
+      getGoods(renderCard, goods => goods.filter(item => item.category.includes(category)));
+    }
+  };
+ 
 
   cartBtn.addEventListener('click', openCart);
   cart.addEventListener('click', closeCard);
-  
+  category.addEventListener('click', chooseCategory);
+
   getGoods(renderCard, randomSort);
 });
